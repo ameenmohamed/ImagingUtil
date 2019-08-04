@@ -13,8 +13,9 @@ public class FileReSize extends BaseRecursion {
 	public FileReSize(String loc,String destLoc) {
 		super(loc,destLoc);
 	}
-	
-
+	static   int fileCount =0;
+	static double srcFileSize = 0;
+	static double destFileSize = 0;
 	@Override
 	public void executeDirTask(File fl) {
 		String absSrcDirPath = fl.getAbsolutePath();
@@ -25,6 +26,8 @@ public class FileReSize extends BaseRecursion {
 			destDir.mkdirs();
 		}
 		startDigging(fl);
+		
+		
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class FileReSize extends BaseRecursion {
 				
 		String absSrcFilePath = flSrcDir.getAbsolutePath();
 		String _destFile = absSrcFilePath.replace(srcDir,destdir); // destdir/+ filepath
-		System.out.println("Replace result :"+_destFile);
+	//	System.out.println("Replace result :"+_destFile);
 		
 		File fldestDir = new File(_destFile);
 		
@@ -40,15 +43,17 @@ public class FileReSize extends BaseRecursion {
 			fldestDir.getParentFile().mkdirs();
 		}
 		
-		System.out.println("resizing Src fl :"+absSrcFilePath);
+	//	System.out.println("resizing Src fl :"+absSrcFilePath);
 		try {
+			fileCount++;
 			ImageResizer.createResizedCopy(absSrcFilePath, 1550, _destFile);
+		//	ImageResizer.jdkCompress(absSrcFilePath, 1, _destFile);
 			//System.out.println("DestFileName :"+_destFile);
 		} catch (Exception e) {
 	
 			e.printStackTrace();
 		}
-		System.out.println(".... Done");
+	//	System.out.println(".... Done");
 
 	}
 
